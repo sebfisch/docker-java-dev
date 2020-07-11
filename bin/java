@@ -1,0 +1,6 @@
+# not using JAVA_TOOL_OPTIONS 
+# because it causes a log message 
+# that interferes with the output of google-java-format
+# and the maven surefire plugin
+java.original $JAVA_OPTIONS "$@"
+

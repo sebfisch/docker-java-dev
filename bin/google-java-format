@@ -1,0 +1,2 @@
+java -jar /usr/share/java-deps/google-java-format-1.7-all-deps.jar "$@"
+
