@@ -6,7 +6,6 @@ ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 ENV EDITOR=vim
 RUN apt update && apt install -y \ 
-  bash-completion \
   git \
   vim \
 && \
