@@ -13,8 +13,7 @@ ARG GID
 ENV GID=$GID
 
 RUN addgroup --gid $GID $GROUP && \
-adduser --disabled-password --gecos '' --uid $UID --gid $GID $USER && \
-usermod -aG sudo $USER
+adduser --disabled-password --gecos '' --uid $UID --gid $GID $USER
 
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$HOME/.m2"
