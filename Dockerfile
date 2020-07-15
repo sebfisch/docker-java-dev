@@ -1,5 +1,5 @@
 FROM adoptopenjdk:latest
-CMD zsh
+CMD zsh --login
 
 ARG HOME
 ENV HOME=$HOME
@@ -42,6 +42,7 @@ RUN vim +PlugInstall +qall && \
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended && \
 git clone https://github.com/reobin/typewritten.git $HOME/.oh-my-zsh/custom/themes/typewritten && \
 ln -s $HOME/.oh-my-zsh/custom/themes/typewritten/typewritten.zsh-theme $HOME/.oh-my-zsh/custom/themes/typewritten.zsh-theme && \
-sed -i -E 's/^(ZSH_THEME=).*$/\1"typewritten"/g' $HOME/.zshrc
+sed -i -E 's/^(ZSH_THEME=).*$/\1"typewritten"/g' $HOME/.zshrc && \
+sed -i -E 's/^(plugins=).*$/\1\(git mvn vi-mode z\)/g' $HOME/.zshrc
 USER root
 

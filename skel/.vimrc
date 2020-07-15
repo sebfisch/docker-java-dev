@@ -9,6 +9,8 @@ Plug 'tpope/vim-sensible'
 Plug 'google/vim-maktaba'
 Plug 'google/vim-glaive'
 Plug 'google/vim-codefmt'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 set number
@@ -18,4 +20,6 @@ set softtabstop=2
 
 autocmd FileType java AutoFormatBuffer google-java-format
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+let g:airline_theme='luna'
 
