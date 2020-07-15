@@ -12,6 +12,10 @@ Plug 'google/vim-codefmt'
 call plug#end()
 
 set number
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+
 autocmd FileType java AutoFormatBuffer google-java-format
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
