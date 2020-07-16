@@ -34,7 +34,7 @@ and installs the following software on top of it.
 [vim-airline]: https://github.com/vim-airline/vim-airline
 [vim-codefmt]: https://github.com/google/vim-codefmt
 
-When building the container a non-root user is created that can be used to run it.
+When building the container a non-root user is created that can be used to develop in it.
 To avoid permission issues when mounting local files to a container volume,
 you can adjust the build args `HOME`, `USER`, `UID`, `GROUP`, and `GID`
 to reflect your local setup.
