@@ -1,14 +1,14 @@
-FROM adoptopenjdk:latest
+ARG JAVA_VERSION=11
+FROM adoptopenjdk:$JAVA_VERSION
 CMD zsh --login
 
-ARG HOME=/home/dev
-ENV HOME=$HOME
-ARG USER=dev
-ENV USER=$USER
+ARG MAVEN3_VERSION=3.6.3
+
+ENV USER=me
+ENV GROUP=me
+ENV HOME=/home/$USER
 ARG UID=1000
 ENV UID=$UID
-ARG GROUP=dev
-ENV GROUP=$GROUP
 ARG GID=1000
 ENV GID=$GID
 
@@ -18,31 +18,29 @@ ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 ENV EDITOR=vim
 
 RUN rm -rf /etc/skel/.bash* /etc/skel/.profile && \
-mv /opt/java/openjdk/bin/java /opt/java/openjdk/bin/java.original
+  mv /opt/java/openjdk/bin/java /opt/java/openjdk/bin/java.original
 COPY skel/* /etc/skel/
 COPY bin/java /opt/java/openjdk/bin/
 COPY bin/google-java-format /usr/local/bin/
 RUN chmod a+x /opt/java/openjdk/bin/java && \
-chmod +x /usr/local/bin/google-java-format && \
-apt-get update && apt-get install -y bsdmainutils git vim zsh && \
-rm -rf /var/lib/apt/lists/ && \
-sed -i 's/bash$/zsh/g' /etc/passwd /etc/adduser.conf && \
-addgroup --gid $GID $GROUP && \
-adduser --disabled-password --gecos '' --uid $UID --gid $GID $USER && \
-mkdir -p /usr/share/maven && \
-curl -fsSL http://apache.osuosl.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz | \
-tar -xzC /usr/share/maven --strip-components=1 && \
-ln -s /usr/share/maven/bin/mvn /usr/bin/mvn && \
-mkdir -p /usr/share/java-deps && \
-curl -fsSL -o /usr/share/java-deps/google-java-format-1.7-all-deps.jar \
-https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar
+  chmod +x /usr/local/bin/google-java-format && \
+  apt-get update && \
+  apt-get install -y bsdmainutils git vim zsh tmux fzf ripgrep curl && \
+  rm -rf /var/lib/apt/lists/ && \
+  curl -sfL git.io/antibody | sh -s - -b /usr/local/bin && \
+  sed -i 's/bash$/zsh/g' /etc/passwd /etc/adduser.conf && \
+  addgroup --gid $GID $GROUP && \
+  adduser --disabled-password --gecos '' --uid $UID --gid $GID $USER && \
+  mkdir -p /usr/share/maven && \
+  curl -fsSL http://apache.osuosl.org/maven/maven-3/${MAVEN3_VERSION}/binaries/apache-maven-${MAVEN3_VERSION}-bin.tar.gz | \
+  tar -xzC /usr/share/maven --strip-components=1 && \
+  ln -s /usr/share/maven/bin/mvn /usr/bin/mvn && \
+  mkdir -p /usr/share/java-deps && \
+  curl -fsSL -o /usr/share/java-deps/google-java-format-1.7-all-deps.jar \
+  https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar
 
 USER $USER
 RUN vim +PlugInstall +qall && \
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended && \
-git clone https://github.com/reobin/typewritten.git $HOME/.oh-my-zsh/custom/themes/typewritten && \
-ln -s $HOME/.oh-my-zsh/custom/themes/typewritten/typewritten.zsh-theme $HOME/.oh-my-zsh/custom/themes/typewritten.zsh-theme && \
-sed -i -E 's/^(ZSH_THEME=).*$/\1"typewritten"/g' $HOME/.zshrc && \
-sed -i -E 's/^(plugins=).*$/\1\(git mvn vi-mode\)/g' $HOME/.zshrc
-USER root
-
+  sed -i 's/delek/monokai_pro/g' $HOME/.vimrc && \
+  git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm && \
+  $HOME/.tmux/plugins/tpm/bin/install_plugins
