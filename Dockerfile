@@ -25,7 +25,7 @@ COPY bin/google-java-format /usr/local/bin/
 RUN chmod a+x /opt/java/openjdk/bin/java && \
   chmod +x /usr/local/bin/google-java-format && \
   apt-get update && \
-  apt-get install -y bsdmainutils git vim zsh tmux fzf ripgrep curl libxrender1 libxtst6 && \
+  apt-get install -y bsdmainutils git vim zsh tmux fzf ripgrep curl libxrender1 libxtst6 libxi6 && \
   rm -rf /var/lib/apt/lists/ && \
   curl -sfL git.io/antibody | sh -s - -b /usr/local/bin && \
   sed -i 's/bash$/zsh/g' /etc/passwd /etc/adduser.conf && \
