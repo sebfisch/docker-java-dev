@@ -1,5 +1,5 @@
 ARG JAVA_VERSION=11
-FROM adoptopenjdk:$JAVA_VERSION
+FROM eclipse-temurin:$JAVA_VERSION
 CMD zsh --login
 
 ARG MAVEN3_VERSION=3.6.3
