@@ -3,6 +3,7 @@ FROM eclipse-temurin:$JAVA_VERSION
 CMD zsh --login
 
 ARG MAVEN3_VERSION=3.8.4
+ARG GJF_VERSION=1.13.0
 
 ENV USER=me
 ENV GROUP=me
@@ -36,8 +37,8 @@ RUN chmod a+x /opt/java/openjdk/bin/java && \
   tar -xzC /usr/share/maven --strip-components=1 && \
   ln -s /usr/share/maven/bin/mvn /usr/bin/mvn && \
   mkdir -p /usr/share/java-deps && \
-  curl -fsSL -o /usr/share/java-deps/google-java-format-1.13.0-all-deps.jar \
-  https://github.com/google/google-java-format/releases/download/v1.13.0/google-java-format-1.13.0-all-deps.jar
+  curl -fsSL -o /usr/share/java-deps/google-java-format-${GJF_VERSION}-all-deps.jar \
+  https://github.com/google/google-java-format/releases/download/v${GJF_VERSION}/google-java-format-${GJF_VERSION}-all-deps.jar
 
 USER $USER
 RUN vim +PlugInstall +qall && \
