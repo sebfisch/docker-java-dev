@@ -1,0 +1,15 @@
+{
+  "name": "java-dev",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "java-dev",
+  "workspaceFolder": "/home/me/java-dev",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.profiles.linux": {}
+      },
+      "extensions": ["mhutchie.git-graph"]
+    }
+  },
+  "remoteUser": "me"
+}

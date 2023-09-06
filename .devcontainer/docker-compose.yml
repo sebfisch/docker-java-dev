@@ -1,0 +1,28 @@
+version: "3.8"
+volumes:
+  home:
+services:
+  java-dev:
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    deploy:
+      resources:
+        limits:
+          cpus: "12.0"
+          memory: 24G
+    build:
+      context: ".."
+      args:
+        USER: me
+        GROUP: me
+        HOME: /home/me
+        UID: 1000
+        GID: 1000
+        LC: en_US.UTF-8
+        TZ: Europe/Berlin
+    hostname: devcontainer
+    volumes:
+      - home:/home
+      - ~/.ssh:/home/me/.ssh/
+      - ..:/home/me/java-dev
+    working_dir: /home/me/java-dev
+    user: me
